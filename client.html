@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<head>
+<title>Pong Game</title>
+<style type="text/css">
+body{
+	width: 760px; /* how wide to make your web page */
+	background-color: teal; /* what color to make the background */
+	margin: 0 auto;
+	padding: 0;
+	font:12px/16px Verdana, sans-serif; /* default font */
+}
+div#main{
+	background-color: #FFF;
+	margin: 0;
+	padding: 10px;
+}
+
+#gameContainer{
+	margin: 0 auto;
+	width: 960px;
+	height: 500px;
+}
+#controls{
+	height: 20px;
+	text-align: center;
+}
+#game{
+	width: 960px;
+	height: 480px;
+	border: 1px solid black;
+}
+</style>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="//cdn.sencha.io/ext-4.1.1-gpl/ext-all-dev.js"></script>
+<!--<script src="/static/pong-game.js"></script>
+<script src="/static/client.js"></script> -->
+
+</head>
+<body><div id="main">
+ 
+<div id="gameContainer" style="display:none;">
+	<div id="game"></div>
+</div>
+
+<select id="users">
+    <option value="default" selected>Choose a User</option>
+</select>
+    <p id="newUser">
+        <input id="username" type="text" name="username" ><br/>
+        <button id="submit">submit</button>
+        
+    </p>
+    
+    <button id="begin">begin</button>
+    
+
+
+
+ 
+</div>
+<script>
+    Ext.DomHelper.useDom = true; // prevent XSS
+ 
+<<<<<<< HEAD:client.html
+var socket = io.connect("http://ec2-54-200-25-58.us-west-2.compute.amazonaws.com");
+
+socket.on("userList", function(content){
+	// This callback runs when the server sends us a "someonesaid" event
+	/*
+        var users = document.getElementById("users");
+        var user=document.createElement("option");
+        user.text=content;
+        users.appendChild(user);
+        */
+        var users = document.getElementById("players");
+        var user=document.createElement("li");
+        user.innerHTML=content;
+        users.appendChild(user);
+
+});
+
+socket.on("displayUsers", function(content){
+=======
+var socket = io.connect("http://ec2-54-200-9-135.us-west-2.compute.amazonaws.com/");
+var users = document.getElementById("users");
+socket.on("someonesaid", function(content){
+	console.log("someonesaid - client");
+>>>>>>> 9b1cc5e8bb8f35dd82202e5f446b5ef754cce0c7:static/client.html
+	// This callback runs when the server sends us a "someonesaid" event
+	/*Ext.fly("users").createChild({
+		tag: "li",
+		children: [content]
+	});*/
+        var users = document.getElementById("players");
+        users.innerHTML = "";
+        for(var i in content) {
+            var user=document.createElement("li");
+            user.innerHTML=content[i];
+            users.appendChild(user);
+        }
+        
+        
+
+});
+
+socket.on("playing", function(content){
+	// This callback runs when the server sends us a "someonesaid" event
+        var messege = document.getElementById("testMessege");
+        messege.innerHTML = "You are playing with " + content["opponent"];
+
+});
+Ext.onReady(function(){
+<<<<<<< HEAD:client.html
+	Ext.fly("submit").on("click", function(){
+		// When the "send" button is clicked, emit a "message" event to the server containing a chat message
+		socket.emit("newUser", Ext.fly("username").getValue());
+=======
+//        $("#begin").hide();
+	Ext.fly("submit").on("click", function(){
+		// When the "send" button is clicked, emit a "message" event to the server containing a chat message
+		socket.emit("message", Ext.fly("username").getValue());
+                console.log("emit message client");
+  //              $("#newUser").hide();
+    //            $("#begin").show();
+>>>>>>> 9b1cc5e8bb8f35dd82202e5f446b5ef754cce0c7:static/client.html
+	});
+        Ext.fly("begin").on("click", function() {
+            var pair = new Object();
+            pair["user"] = Ext.fly("username").getValue();
+            pair["opponent"] = Ext.fly("opponent").getValue();
+            socket.emit("beginMessege", pair);
+        });
+});
+
+</script>
+<<<<<<< HEAD:client.html
+</head>
+<body><div id="main">
+ 
+<div id="gameContainer" style="display:none;">
+	<div id="game"></div>
+</div>
+
+<select id="users">
+    <option value="default" selected>Choose a User</option>
+</select>
+    <p id="newUser">
+        <label>Create your user name</label>
+        <input id="username" type="text" name="username" ><br/>
+        <button id="submit">submit</button>    
+    </p>
+    
+    <ul id="players">
+    </ul>
+    
+    <p>
+        <label>Choose your opponent</label>
+        <input id="opponent" type="text" name="opponent" ><br/>
+        <button id="begin">begin</button>    
+    </p>
+    
+    <p id="testMessege">no</p>
+=======
+>>>>>>> 9b1cc5e8bb8f35dd82202e5f446b5ef754cce0c7:static/client.html
+
+</body>
+</html>
+
